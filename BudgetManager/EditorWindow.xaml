@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
         mc:Ignorable="d"
-        Title="EditorWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Tranzakció Szerkesztése" Height="300" Width="300" WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="20">
+        <TextBlock Text="Cím:" />
+        <TextBox Text="{Binding Title}" Margin="0,0,0,10" />
+
+        <TextBlock Text="Összeg (Ft):" />
+        <TextBox Text="{Binding Amount}" Margin="0,0,0,10" />
+
+        <TextBlock Text="Kategória (Étel, Utazás, Fizetés stb.):" />
+        <TextBox Text="{Binding Category}" Margin="0,0,0,20" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Mentés" Click="Save_Click" Width="80" Margin="10" IsDefault="True"/>
+            <Button Content="Mégse" Click="Cancel_Click" Width="80" Margin="10" IsCancel="True"/>
+        </StackPanel>
+    </StackPanel>
 </Window>

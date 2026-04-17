@@ -11,17 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BudgetManager.Models;
 
 namespace BudgetManager
 {
-    /// <summary>
-    /// Interaction logic for EditorWindow.xaml
-    /// </summary>
     public partial class EditorWindow : Window
     {
-        public EditorWindow()
+        public EditorWindow(Transaction t)
         {
             InitializeComponent();
+            this.DataContext = t;
         }
+        private void Save_Click(object sender, RoutedEventArgs e) => this.DialogResult = true;
+        private void Cancel_Click(object sender, RoutedEventArgs e) => this.DialogResult = false;
     }
 }
