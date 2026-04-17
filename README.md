@@ -8,5 +8,5 @@
 
 ## A projekt célja
 Egy asztali alkalmazás, amellyel a felhasználó nyomon követheti a bevételeit és kiadásait. 
-Tartalmaz kategória alapú szűrést továbbított események (Routed Events) használatával, 
-valamint egy teljesen szétválasztott MVVM architektúrát IoC konténerrel és DI (Dependency Injection) szolgáltatásokkal.
+Tartalmaz kategória alapú szűrést továbbított események használatával, 
+valamint egy teljesen szétválasztott MVVM architektúrát IoC konténerrel és Dependency Injection szolgáltatásokkal.
