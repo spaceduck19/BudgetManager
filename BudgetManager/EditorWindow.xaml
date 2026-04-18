@@ -5,13 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
         mc:Ignorable="d"
-        Title="Tranzakció Szerkesztése" Height="300" Width="300" WindowStartupLocation="CenterOwner">
+        xmlns:models="clr-namespace:BudgetManager.Models"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        
+        Title="Tranzakció Szerkesztése" Height="370" Width="300" WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+        <ObjectDataProvider x:Key="TransactionTypeEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="models:TransactionType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+
     <StackPanel Margin="20">
         <TextBlock Text="Cím:" />
         <TextBox Text="{Binding Title}" Margin="0,0,0,10" />
 
         <TextBlock Text="Összeg (Ft):" />
         <TextBox Text="{Binding Amount}" Margin="0,0,0,10" />
+
+        <TextBlock Text="Típus (Bevétel/Kiadás):" />
+        <ComboBox ItemsSource="{Binding Source={StaticResource TransactionTypeEnum}}" 
+                  SelectedItem="{Binding Type}" 
+                  Margin="0,0,0,10" />
 
         <TextBlock Text="Kategória:" />
         <ComboBox Text="{Binding Category}" IsEditable="True" Margin="0,0,0,20">

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BudgetManager.Models
 {
-    public enum TransactionType { Income, Expense }
+    public enum TransactionType { Bevétel, Kiadás }
 
     public partial class Transaction : ObservableObject
     {

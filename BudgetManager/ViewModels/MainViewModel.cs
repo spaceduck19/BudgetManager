@@ -29,9 +29,9 @@ namespace BudgetManager.ViewModels
             this.editorService = editorService;
 
             // Kezdeti adatok
-            AddTransaction(new Transaction { Title = "Ösztöndíj", Amount = 80000, Type = TransactionType.Income, Category = "Fizetés" });
-            AddTransaction(new Transaction { Title = "BKV Bérlet", Amount = 3450, Type = TransactionType.Expense, Category = "Utazás" });
-            AddTransaction(new Transaction { Title = "Ebéd", Amount = 2500, Type = TransactionType.Expense, Category = "Étel" });
+            AddTransaction(new Transaction { Title = "Ösztöndíj", Amount = 80000, Type = TransactionType.Bevétel, Category = "Fizetés" });
+            AddTransaction(new Transaction { Title = "BKV Bérlet", Amount = 3450, Type = TransactionType.Kiadás, Category = "Utazás" });
+            AddTransaction(new Transaction { Title = "Ebéd", Amount = 2500, Type = TransactionType.Kiadás, Category = "Étel" });
 
             FilterByCategory("Összes");
         }
@@ -90,8 +90,8 @@ namespace BudgetManager.ViewModels
 
         private void CalculateBalance()
         {
-            int income = AllTransactions.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount);
-            int expense = AllTransactions.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount);
+            int income = AllTransactions.Where(t => t.Type == TransactionType.Bevétel).Sum(t => t.Amount);
+            int expense = AllTransactions.Where(t => t.Type == TransactionType.Kiadás).Sum(t => t.Amount);
             CurrentBalance = income - expense;
         }
     }

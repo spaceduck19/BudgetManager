@@ -29,6 +29,8 @@
             <Button Content="Étel" Margin="5" Padding="5"/>
             <Button Content="Utazás" Margin="5" Padding="5"/>
             <Button Content="Fizetés" Margin="5" Padding="5"/>
+            <Button Content="Szórakozás" Margin="5" Padding="5"/>
+            <Button Content="Általános" Margin="5" Padding="5"/>
         </StackPanel>
 
         <ListBox Grid.Row="2" ItemsSource="{Binding DisplayedTransactions}" SelectedItem="{Binding SelectedTransaction}">

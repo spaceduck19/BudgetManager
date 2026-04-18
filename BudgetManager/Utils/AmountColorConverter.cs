@@ -15,7 +15,7 @@ namespace BudgetManager.Utils
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is TransactionType type)
-                return type == TransactionType.Income ? Brushes.Green : Brushes.Red;
+                return type == TransactionType.Bevétel ? Brushes.Green : Brushes.Red;
             return Brushes.Black;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
