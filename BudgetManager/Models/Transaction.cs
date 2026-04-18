@@ -21,7 +21,7 @@ namespace BudgetManager.Models
         private TransactionType type;
 
         [ObservableProperty]
-        private string category = "General"; // például étel, utazás, fizetés
+        private string category = "Általános"; // például étel, utazás, fizetés
 
         [ObservableProperty]
         private DateTime date = DateTime.Now;

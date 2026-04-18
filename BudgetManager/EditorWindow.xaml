@@ -13,8 +13,14 @@
         <TextBlock Text="Összeg (Ft):" />
         <TextBox Text="{Binding Amount}" Margin="0,0,0,10" />
 
-        <TextBlock Text="Kategória (Étel, Utazás, Fizetés stb.):" />
-        <TextBox Text="{Binding Category}" Margin="0,0,0,20" />
+        <TextBlock Text="Kategória:" />
+        <ComboBox Text="{Binding Category}" IsEditable="True" Margin="0,0,0,20">
+            <ComboBoxItem Content="Fizetés" />
+            <ComboBoxItem Content="Étel" />
+            <ComboBoxItem Content="Utazás" />
+            <ComboBoxItem Content="Szórakozás" />
+            <ComboBoxItem Content="Általános" />
+        </ComboBox>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Mentés" Click="Save_Click" Width="80" Margin="10" IsDefault="True"/>

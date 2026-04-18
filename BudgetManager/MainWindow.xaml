@@ -4,9 +4,50 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
+        xmlns:utils="clr-namespace:BudgetManager.Utils"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Pénzügyi Menedzser" Height="450" Width="600">
+    <Window.Resources>
+        <utils:AmountColorConverter x:Key="ColorConv" />
+    </Window.Resources>
 
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding CurrentBalance, StringFormat='Egyenleg: {0} Ft'}" 
+                   FontSize="24" FontWeight="Bold" TextAlignment="Center" Margin="10"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" 
+                    ButtonBase.Click="CategoryFilterBar_Click" Margin="0,0,0,10">
+            <TextBlock Text="Szűrés kategóriára: " VerticalAlignment="Center" FontWeight="Bold"/>
+            <Button Content="Összes" Margin="5" Padding="5"/>
+            <Button Content="Étel" Margin="5" Padding="5"/>
+            <Button Content="Utazás" Margin="5" Padding="5"/>
+            <Button Content="Fizetés" Margin="5" Padding="5"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="2" ItemsSource="{Binding DisplayedTransactions}" SelectedItem="{Binding SelectedTransaction}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="{Binding Title}" Width="150" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Category}" Width="100"/>
+                        <TextBlock Text="{Binding Amount, StringFormat='{}{0} Ft'}" 
+                                   Foreground="{Binding Type, Converter={StaticResource ColorConv}}" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Új Hozzáadása" Command="{Binding CreateNewCommand}" Margin="5" Padding="10" Background="LightGreen"/>
+            <Button Content="Szerkesztés" Command="{Binding EditSelectedCommand}" Margin="5" Padding="10"/>
+            <Button Content="Törlés" Command="{Binding DeleteSelectedCommand}" Margin="5" Padding="10" Background="LightCoral"/>
+        </StackPanel>
     </Grid>
 </Window>

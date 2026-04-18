@@ -29,11 +29,11 @@ namespace BudgetManager.ViewModels
             this.editorService = editorService;
 
             // Kezdeti adatok
-            AddTransaction(new Transaction { Title = "Ösztöndíj", Amount = 80000, Type = TransactionType.Income, Category = "Salary" });
-            AddTransaction(new Transaction { Title = "BKV Bérlet", Amount = 3450, Type = TransactionType.Expense, Category = "Transport" });
-            AddTransaction(new Transaction { Title = "Ebéd", Amount = 2500, Type = TransactionType.Expense, Category = "Food" });
+            AddTransaction(new Transaction { Title = "Ösztöndíj", Amount = 80000, Type = TransactionType.Income, Category = "Fizetés" });
+            AddTransaction(new Transaction { Title = "BKV Bérlet", Amount = 3450, Type = TransactionType.Expense, Category = "Utazás" });
+            AddTransaction(new Transaction { Title = "Ebéd", Amount = 2500, Type = TransactionType.Expense, Category = "Étel" });
 
-            FilterByCategory("All");
+            FilterByCategory("Összes");
         }
 
         private void AddTransaction(Transaction t)
@@ -47,7 +47,7 @@ namespace BudgetManager.ViewModels
             DisplayedTransactions.Clear();
             foreach (var t in AllTransactions)
             {
-                if (category == "All" || t.Category == category)
+                if (category == "Összes" || t.Category == category)
                     DisplayedTransactions.Add(t);
             }
         }
@@ -59,7 +59,7 @@ namespace BudgetManager.ViewModels
             if (editorService.EditTransaction(newTrans))
             {
                 AddTransaction(newTrans);
-                FilterByCategory("All"); // Frissítjük a nézetet
+                FilterByCategory("Összes"); // Frissítjük a nézetet
             }
         }
 
