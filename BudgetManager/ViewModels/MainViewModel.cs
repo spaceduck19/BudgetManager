@@ -20,6 +20,9 @@ namespace BudgetManager.ViewModels
         public ObservableCollection<Transaction> AllTransactions { get; } = new();
         public ObservableCollection<Transaction> DisplayedTransactions { get; } = new();
 
+
+        public ObservableCollection<string> Categories { get; } = new() { "Összes", "Fizetés", "Étel", "Utazás", "Szórakozás", "Általános" };
+
         // CommunityToolkit.Mvvm Source Generator-a a háttérben legenerálja a publikus SelectedTransaction property-t
         // és az INofityPropertyChanged hívásokat
 
@@ -47,6 +50,7 @@ namespace BudgetManager.ViewModels
         private void AddTransaction(Transaction t)
         {
             AllTransactions.Add(t);
+            UpdateCategories(t.Category);
             CalculateBalance();
         }
 
@@ -83,6 +87,7 @@ namespace BudgetManager.ViewModels
                 if (editorService.EditTransaction(copy))
                 {
                     SelectedTransaction.CopyFrom(copy);
+                    UpdateCategories(SelectedTransaction.Category);
                     CalculateBalance();
                 }
             }
@@ -104,6 +109,13 @@ namespace BudgetManager.ViewModels
             int income = AllTransactions.Where(t => t.Type == TransactionType.Bevétel).Sum(t => t.Amount);
             int expense = AllTransactions.Where(t => t.Type == TransactionType.Kiadás).Sum(t => t.Amount);
             CurrentBalance = income - expense;
+        }
+        private void UpdateCategories(string newCategory)
+        {
+            if (!string.IsNullOrWhiteSpace(newCategory) && !Categories.Contains(newCategory))
+            {
+                Categories.Add(newCategory);
+            }
         }
     }
 }

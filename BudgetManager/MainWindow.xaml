@@ -23,14 +23,23 @@
                    FontSize="24" FontWeight="Bold" TextAlignment="Center" Margin="10"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" 
-                    ButtonBase.Click="CategoryFilterBar_Click" Margin="0,0,0,10">
-            <TextBlock Text="Szűrés kategóriára: " VerticalAlignment="Center" FontWeight="Bold"/>
-            <Button Content="Összes" Margin="5" Padding="5"/>
-            <Button Content="Étel" Margin="5" Padding="5"/>
-            <Button Content="Utazás" Margin="5" Padding="5"/>
-            <Button Content="Fizetés" Margin="5" Padding="5"/>
-            <Button Content="Szórakozás" Margin="5" Padding="5"/>
-            <Button Content="Általános" Margin="5" Padding="5"/>
+            ButtonBase.Click="CategoryFilterBar_Click" Margin="0,0,0,10">
+
+            <TextBlock Text="Szűrés kategóriára: " VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,10,0"/>
+
+            <ItemsControl ItemsSource="{Binding Categories}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding}" Margin="5" Padding="5"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
 
         <ListBox Grid.Row="2" ItemsSource="{Binding DisplayedTransactions}" SelectedItem="{Binding SelectedTransaction}">
