@@ -19,8 +19,34 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="{Binding CurrentBalance, StringFormat='Egyenleg: {0} Ft'}" 
-                   FontSize="24" FontWeight="Bold" TextAlignment="Center" Margin="10"/>
+        <Border Grid.Row="0" Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="1" 
+        CornerRadius="10" Margin="10,10,10,20" Padding="15">
+
+            <StackPanel>
+                <TextBlock Text="Jelenlegi Egyenleg" FontSize="14" Foreground="Gray" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentBalance, StringFormat='{}{0:N0} Ft'}" 
+                   FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock Text="📈 Összbevétel" FontSize="14" Foreground="Gray" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding TotalIncome, StringFormat='+ {0:N0} Ft'}" 
+                           FontSize="20" FontWeight="Bold" Foreground="MediumSeaGreen" HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                        <TextBlock Text="📉 Összkiadás" FontSize="14" Foreground="Gray" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding TotalExpense, StringFormat='- {0:N0} Ft'}" 
+                           FontSize="20" FontWeight="Bold" Foreground="IndianRed" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
 

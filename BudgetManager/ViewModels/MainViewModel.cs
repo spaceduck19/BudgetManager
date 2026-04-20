@@ -16,7 +16,6 @@ namespace BudgetManager.ViewModels
         private readonly IEditorService editorService;
 
         // Listákat ebben tároljuk
-
         public ObservableCollection<Transaction> AllTransactions { get; } = new();
         public ObservableCollection<Transaction> DisplayedTransactions { get; } = new();
 
@@ -28,17 +27,17 @@ namespace BudgetManager.ViewModels
         [ObservableProperty]
         private string? selectedOtherCategory;
 
-        // CommunityToolkit.Mvvm Source Generator-a a háttérben legenerálja a publikus SelectedTransaction property-t
-        // és az INofityPropertyChanged hívásokat
-
         [ObservableProperty]
         private Transaction? selectedTransaction;
 
         [ObservableProperty]
         private int currentBalance;
 
-        // A konstruktor IoC-ből (DI) kapja meg az IEditorService-t, így a ViewModel nem példányosít közvetlenül felületi elemeket
-        // MVVM-kompatibilis
+        [ObservableProperty]
+        private int totalIncome;
+
+        [ObservableProperty]
+        private int totalExpense;
 
         public MainViewModel(IEditorService editorService)
         {
@@ -111,10 +110,12 @@ namespace BudgetManager.ViewModels
 
         private void CalculateBalance()
         {
-            int income = AllTransactions.Where(t => t.Type == TransactionType.Bevétel).Sum(t => t.Amount);
-            int expense = AllTransactions.Where(t => t.Type == TransactionType.Kiadás).Sum(t => t.Amount);
-            CurrentBalance = income - expense;
+            TotalIncome = AllTransactions.Where(t => t.Type == TransactionType.Bevétel).Sum(t => t.Amount);
+            TotalExpense = AllTransactions.Where(t => t.Type == TransactionType.Kiadás).Sum(t => t.Amount);
+
+            CurrentBalance = TotalIncome - TotalExpense;
         }
+
         private void UpdateCategories(string newCategory)
         {
             if (!string.IsNullOrWhiteSpace(newCategory) &&
