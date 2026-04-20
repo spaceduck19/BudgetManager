@@ -24,11 +24,13 @@ namespace BudgetManager
         private void CategoryFilterBar_Click(object sender, RoutedEventArgs e)
         {
             // Megnézzük, melyik gomb "dobta fel" az eseményt a StackPanelnek
+
             if (e.OriginalSource is Button clickedButton)
             {
                 string category = clickedButton.Content.ToString() ?? "Összes";
 
                 // Szólunk a ViewModelnek, hogy szűrjön
+
                 if (this.DataContext is MainViewModel vm)
                 {
                     vm.FilterByCategory(category);

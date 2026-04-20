@@ -18,11 +18,17 @@ namespace BudgetManager.ViewModels
         public ObservableCollection<Transaction> AllTransactions { get; } = new();
         public ObservableCollection<Transaction> DisplayedTransactions { get; } = new();
 
+        // CommunityToolkit.Mvvm Source Generator-a a háttérben legenerálja a publikus SelectedTransaction property-t
+        // és az INofityPropertyChanged hívásokat
+
         [ObservableProperty]
         private Transaction? selectedTransaction;
 
         [ObservableProperty]
         private int currentBalance;
+
+        // A konstruktor IoC-ből (DI) kapja meg az IEditorService-t, így a ViewModel nem példányosít közvetlenül felületi elemeket
+        // MVVM-kompatibilis
 
         public MainViewModel(IEditorService editorService)
         {
@@ -51,6 +57,9 @@ namespace BudgetManager.ViewModels
                     DisplayedTransactions.Add(t);
             }
         }
+
+        // RelayCommand automatikusan ICommand típusú parancsot csinál a metódusból,
+        // amit a XAML-ből közvetlenül meg tudunk hívni adatkötéssel
 
         [RelayCommand]
         private void CreateNew()
