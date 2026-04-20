@@ -11,6 +11,8 @@ namespace BudgetManager.Models
 
     public partial class Transaction : ObservableObject
     {
+        // ObservableProperty-k miatt elég a privát mezőket felvenni, illetve háttérben INotifyPropertyChanged hívások
+
         [ObservableProperty]
         private string title = string.Empty;
 

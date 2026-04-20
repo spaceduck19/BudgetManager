@@ -15,6 +15,8 @@ namespace BudgetManager.ViewModels
     {
         private readonly IEditorService editorService;
 
+        // Listákat ebben tároljuk
+
         public ObservableCollection<Transaction> AllTransactions { get; } = new();
         public ObservableCollection<Transaction> DisplayedTransactions { get; } = new();
 
