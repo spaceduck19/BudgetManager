@@ -21,7 +21,12 @@ namespace BudgetManager.ViewModels
         public ObservableCollection<Transaction> DisplayedTransactions { get; } = new();
 
 
-        public ObservableCollection<string> Categories { get; } = new() { "Összes", "Fizetés", "Étel", "Utazás", "Szórakozás", "Általános" };
+        // Két külön lista a kategóriáknak
+        public ObservableCollection<string> MainCategories { get; } = new() { "Összes", "Fizetés", "Étel", "Utazás" };
+        public ObservableCollection<string> OtherCategories { get; } = new() { "Szórakozás", "Általános" };
+
+        [ObservableProperty]
+        private string? selectedOtherCategory;
 
         // CommunityToolkit.Mvvm Source Generator-a a háttérben legenerálja a publikus SelectedTransaction property-t
         // és az INofityPropertyChanged hívásokat
@@ -112,9 +117,20 @@ namespace BudgetManager.ViewModels
         }
         private void UpdateCategories(string newCategory)
         {
-            if (!string.IsNullOrWhiteSpace(newCategory) && !Categories.Contains(newCategory))
+            if (!string.IsNullOrWhiteSpace(newCategory) &&
+                !MainCategories.Contains(newCategory) &&
+                !OtherCategories.Contains(newCategory))
             {
-                Categories.Add(newCategory);
+                OtherCategories.Add(newCategory);
+            }
+        }
+
+        // Ha a legördülő menüben (Továbbiak) választunk valamit, ez automatikusan lefut:
+        partial void OnSelectedOtherCategoryChanged(string? value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                FilterByCategory(value);
             }
         }
     }

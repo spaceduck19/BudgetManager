@@ -22,24 +22,30 @@
         <TextBlock Grid.Row="0" Text="{Binding CurrentBalance, StringFormat='Egyenleg: {0} Ft'}" 
                    FontSize="24" FontWeight="Bold" TextAlignment="Center" Margin="10"/>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" 
-            ButtonBase.Click="CategoryFilterBar_Click" Margin="0,0,0,10">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
 
-            <TextBlock Text="Szűrés kategóriára: " VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,10,0"/>
+            <TextBlock Text="Szűrés: " VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,10,0"/>
 
-            <ItemsControl ItemsSource="{Binding Categories}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+            <StackPanel Orientation="Horizontal" ButtonBase.Click="CategoryFilterBar_Click">
+                <ItemsControl ItemsSource="{Binding MainCategories}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding}" Margin="5" Padding="5" MinWidth="60"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Content="{Binding}" Margin="5" Padding="5"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <TextBlock Text="Továbbiak:" VerticalAlignment="Center" FontWeight="Bold" Margin="15,0,5,0"/>
+            <ComboBox ItemsSource="{Binding OtherCategories}" 
+              SelectedItem="{Binding SelectedOtherCategory}" 
+              Width="120" Margin="5" Padding="5" VerticalContentAlignment="Center"/>
+
         </StackPanel>
 
         <ListBox Grid.Row="2" ItemsSource="{Binding DisplayedTransactions}" SelectedItem="{Binding SelectedTransaction}">
