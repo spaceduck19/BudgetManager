@@ -20,12 +20,11 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="1" 
-        CornerRadius="10" Margin="10,10,10,20" Padding="15">
-
+                CornerRadius="10" Margin="10,10,10,20" Padding="15">
             <StackPanel>
                 <TextBlock Text="Jelenlegi Egyenleg" FontSize="14" Foreground="Gray" HorizontalAlignment="Center"/>
                 <TextBlock Text="{Binding CurrentBalance, StringFormat='{}{0:N0} Ft'}" 
-                   FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                           FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -36,57 +35,57 @@
                     <StackPanel Grid.Column="0" HorizontalAlignment="Center">
                         <TextBlock Text="📈 Összbevétel" FontSize="14" Foreground="Gray" HorizontalAlignment="Center"/>
                         <TextBlock Text="{Binding TotalIncome, StringFormat='+ {0:N0} Ft'}" 
-                           FontSize="20" FontWeight="Bold" Foreground="MediumSeaGreen" HorizontalAlignment="Center"/>
+                                   FontSize="20" FontWeight="Bold" Foreground="MediumSeaGreen" HorizontalAlignment="Center"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" HorizontalAlignment="Center">
                         <TextBlock Text="📉 Összkiadás" FontSize="14" Foreground="Gray" HorizontalAlignment="Center"/>
                         <TextBlock Text="{Binding TotalExpense, StringFormat='- {0:N0} Ft'}" 
-                           FontSize="20" FontWeight="Bold" Foreground="IndianRed" HorizontalAlignment="Center"/>
+                                   FontSize="20" FontWeight="Bold" Foreground="IndianRed" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
         </Border>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+            <CheckBox Content="Szűrés" IsChecked="{Binding IsFilterActive}" 
+                      VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold"/>
 
-            <TextBlock Text="Szűrés: " VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,10,0"/>
+            <TextBlock Text="Kategória:" VerticalAlignment="Center" Margin="0,0,5,0"/>
 
-            <StackPanel Orientation="Horizontal" ButtonBase.Click="CategoryFilterBar_Click">
-                <ItemsControl ItemsSource="{Binding MainCategories}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button Content="{Binding}" Margin="5" Padding="5" MinWidth="60"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-
-            <TextBlock Text="Továbbiak:" VerticalAlignment="Center" FontWeight="Bold" Margin="15,0,5,0"/>
-            <ComboBox ItemsSource="{Binding OtherCategories}" 
-              SelectedItem="{Binding SelectedOtherCategory}" 
-              Width="120" Margin="5" Padding="5" VerticalContentAlignment="Center"/>
-
+            <ComboBox ItemsSource="{Binding Categories}" 
+                      SelectedItem="{Binding SelectedFilterCategory}" 
+                      IsEnabled="{Binding IsFilterActive}"
+                      Width="150" Padding="5"/>
         </StackPanel>
 
         <ListBox Grid.Row="2" ItemsSource="{Binding DisplayedTransactions}" SelectedItem="{Binding SelectedTransaction}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="{Binding Title}" Width="150" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Category}" Width="100"/>
-                        <TextBlock Text="{Binding Amount, StringFormat='{}{0} Ft'}" 
-                                   Foreground="{Binding Type, Converter={StaticResource ColorConv}}" FontWeight="Bold"/>
-                    </StackPanel>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Date, StringFormat={}{0:yyyy.MM.dd.}}" 
+                                   Foreground="Gray" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Column="1" Text="{Binding Title}" FontWeight="Bold" 
+                                   VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Column="2" Text="{Binding Category}" 
+                                   VerticalAlignment="Center" FontStyle="Italic"/>
+
+                        <TextBlock Grid.Column="3" Text="{Binding Amount, StringFormat='{}{0:N0} Ft'}" 
+                                   Foreground="{Binding Type, Converter={StaticResource ColorConv}}" 
+                                   FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="Új Hozzáadása" Command="{Binding CreateNewCommand}" Margin="5" Padding="10" Background="LightGreen"/>
             <Button Content="Szerkesztés" Command="{Binding EditSelectedCommand}" Margin="5" Padding="10"/>

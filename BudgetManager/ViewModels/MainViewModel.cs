@@ -19,13 +19,11 @@ namespace BudgetManager.ViewModels
         public ObservableCollection<Transaction> AllTransactions { get; } = new();
         public ObservableCollection<Transaction> DisplayedTransactions { get; } = new();
 
-
-        // Két külön lista a kategóriáknak
-        public ObservableCollection<string> MainCategories { get; } = new() { "Összes", "Fizetés", "Étel", "Utazás" };
-        public ObservableCollection<string> OtherCategories { get; } = new() { "Szórakozás", "Általános" };
-
-        [ObservableProperty]
-        private string? selectedOtherCategory;
+        // Egyetlen, közös lista a kategóriáknak a legördülő menühöz
+        public ObservableCollection<string> Categories { get; } = new()
+        {
+            "Összes", "Fizetés", "Étel", "Utazás", "Szórakozás", "Általános"
+        };
 
         [ObservableProperty]
         private Transaction? selectedTransaction;
@@ -39,6 +37,12 @@ namespace BudgetManager.ViewModels
         [ObservableProperty]
         private int totalExpense;
 
+        [ObservableProperty]
+        private bool isFilterActive;
+
+        [ObservableProperty]
+        private string selectedFilterCategory = "Összes";
+
         public MainViewModel(IEditorService editorService)
         {
             this.editorService = editorService;
@@ -48,7 +52,7 @@ namespace BudgetManager.ViewModels
             AddTransaction(new Transaction { Title = "BKV Bérlet", Amount = 3450, Type = TransactionType.Kiadás, Category = "Utazás" });
             AddTransaction(new Transaction { Title = "Ebéd", Amount = 2500, Type = TransactionType.Kiadás, Category = "Étel" });
 
-            FilterByCategory("Összes");
+            FilterByCategory();
         }
 
         private void AddTransaction(Transaction t)
@@ -58,18 +62,18 @@ namespace BudgetManager.ViewModels
             CalculateBalance();
         }
 
-        public void FilterByCategory(string category)
+        private void FilterByCategory()
         {
             DisplayedTransactions.Clear();
             foreach (var t in AllTransactions)
             {
-                if (category == "Összes" || t.Category == category)
+                // JAVÍTVA: Az "All" helyett az "Összes" szót vizsgáljuk!
+                if (!IsFilterActive || SelectedFilterCategory == "Összes" || t.Category == SelectedFilterCategory)
+                {
                     DisplayedTransactions.Add(t);
+                }
             }
         }
-
-        // RelayCommand automatikusan ICommand típusú parancsot csinál a metódusból,
-        // amit a XAML-ből közvetlenül meg tudunk hívni adatkötéssel
 
         [RelayCommand]
         private void CreateNew()
@@ -78,7 +82,7 @@ namespace BudgetManager.ViewModels
             if (editorService.EditTransaction(newTrans))
             {
                 AddTransaction(newTrans);
-                FilterByCategory("Összes"); // Frissítjük a nézetet
+                FilterByCategory();
             }
         }
 
@@ -118,21 +122,14 @@ namespace BudgetManager.ViewModels
 
         private void UpdateCategories(string newCategory)
         {
-            if (!string.IsNullOrWhiteSpace(newCategory) &&
-                !MainCategories.Contains(newCategory) &&
-                !OtherCategories.Contains(newCategory))
+            if (!string.IsNullOrWhiteSpace(newCategory) && !Categories.Contains(newCategory))
             {
-                OtherCategories.Add(newCategory);
+                Categories.Add(newCategory);
             }
         }
 
-        // Ha a legördülő menüben (Továbbiak) választunk valamit, ez automatikusan lefut:
-        partial void OnSelectedOtherCategoryChanged(string? value)
-        {
-            if (!string.IsNullOrEmpty(value))
-            {
-                FilterByCategory(value);
-            }
-        }
+        //Toolkit meghívja, ha pipa vagy kategóriaváltás
+        partial void OnIsFilterActiveChanged(bool value) => FilterByCategory();
+        partial void OnSelectedFilterCategoryChanged(string value) => FilterByCategory();
     }
 }
