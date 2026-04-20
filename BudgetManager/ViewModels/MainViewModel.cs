@@ -67,7 +67,6 @@ namespace BudgetManager.ViewModels
             DisplayedTransactions.Clear();
             foreach (var t in AllTransactions)
             {
-                // JAVÍTVA: Az "All" helyett az "Összes" szót vizsgáljuk!
                 if (!IsFilterActive || SelectedFilterCategory == "Összes" || t.Category == SelectedFilterCategory)
                 {
                     DisplayedTransactions.Add(t);

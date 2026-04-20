@@ -22,7 +22,26 @@ namespace BudgetManager
             InitializeComponent();
             this.DataContext = t;
         }
-        private void Save_Click(object sender, RoutedEventArgs e) => this.DialogResult = true;
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is Transaction t)
+            {
+                if (string.IsNullOrWhiteSpace(t.Title))
+                {
+                    MessageBox.Show("A 'Cím' mező kitöltése kötelező!", "Hiányzó adat", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (t.Amount <= 0)
+                {
+                    MessageBox.Show("Az 'Összeg' mezőbe egy nullánál nagyobb számot kell beírni!", "Hibás adat", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+            }
+            this.DialogResult = true;
+        }
+
         private void Cancel_Click(object sender, RoutedEventArgs e) => this.DialogResult = false;
     }
 }
