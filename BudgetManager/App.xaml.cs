@@ -13,7 +13,8 @@ namespace BudgetManager
         public App()
         {
             var services = new ServiceCollection();
-            // Dependency Injection beállítás / Singleton, hogy az egész programban csak egy példány legyen
+            // Dependency Injection beállítása
+            // Singleton, hogy az egész programban csak egy példány legyen
             services.AddSingleton<IEditorService, EditorService>();
             services.AddTransient<MainViewModel>(); // Transient, minden lekéréskor új példány legyen, habár főablaknál egy is elég
             Ioc.Default.ConfigureServices(services.BuildServiceProvider());
